@@ -66,9 +66,18 @@ class MainScene
 public:
     MainScene(int n);
     ~MainScene();
-    void Update();
+    int Update();
     void Draw();
     Color getColor(int index);
+};
+
+class MenuScene
+{
+public:
+    MenuScene();
+    ~MenuScene();
+    int Update();
+    void Draw();
 };
 
 #endif

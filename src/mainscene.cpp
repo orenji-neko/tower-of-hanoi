@@ -34,10 +34,14 @@ MainScene::MainScene(int n)
 
 }
 
-void MainScene::Update()
+int MainScene::Update()
 {
     Vector2 mouseV = GetMousePosition();
     Vector2 mouseD = GetMouseDelta();
+
+    // keyboard check
+    if(IsKeyPressed(KEY_E))
+        return -1;
 
     // checking each tower and its disks
     for(int i = 0; i < 3; i++)
@@ -83,6 +87,7 @@ void MainScene::Update()
         }
     }
 
+    return 0;
 }
 
 void MainScene::Draw()
@@ -103,6 +108,7 @@ void MainScene::Draw()
 
 MainScene::~MainScene()
 {
+    // deallocating disks
     for(int i = 0; i < 3; i++)
     {
         Tower *tmp = towers->get(i);
@@ -110,10 +116,12 @@ MainScene::~MainScene()
             delete tmp->pop();
     }
 
+    // pointer to null
     selected = NULL;
     prev = NULL;
     hovered = NULL;
 
+    // sige pinapalaya na kita
     delete src;
     delete aux;
     delete dest;
