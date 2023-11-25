@@ -60,6 +60,7 @@ public:
 class MainScene
 {
     int n, count, moves;
+    bool hasWon;
     Tower *src, *aux, *dest, *prev, *hovered;
     Disk *selected;
     Stack<Tower*> *towers;
@@ -69,6 +70,8 @@ public:
     int Update();
     void Draw();
     Color getColor(int index);
+
+    void reset();
 };
 
 #endif
