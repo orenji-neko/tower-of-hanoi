@@ -28,15 +28,6 @@ public:
     void Draw();
 };
 
-class Tower
-{
-    Vector2 *position;
-public:
-    Tower(int cap);
-    ~Tower();
-    void draw();
-};
-
 class Disk
 {
     Vector2 *position;
@@ -54,6 +45,23 @@ public:
     Rectangle getRectangle();
     Color getColor();
     Vector2 getPosition();
+};
+
+class Tower
+{
+    Vector2 *position;
+    Rectangle *rect;
+    Stack<Disk*> *tower;
+public:
+    Tower(int x, int y, int cap);
+    ~Tower();
+    void draw();
+    void push(Disk *disk);
+    bool isEmpty();
+    Rectangle getRect();
+    Disk* pop();
+    Disk top();
+    Disk* popTopDiskOnHover(Vector2 mouseV);
 };
 
 #endif

@@ -92,3 +92,4 @@ int Stack<T>::getCapacity()
 }
 
 template class Stack<Disk*>;
+template class Stack<Tower*>;

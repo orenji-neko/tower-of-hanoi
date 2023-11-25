@@ -6,7 +6,7 @@
 Disk::Disk(int x, int y, float width, float height, Color col)
 {
     position = new Vector2{(float)x, (float)y};
-    rect = new Rectangle{position->x, position->y, width, height};
+    rect = new Rectangle{position->x - (width / 2), position->y, width, height};
 
     this->col = col;
 }
@@ -22,7 +22,7 @@ void Disk::setPosition(int x, int y)
     position->x = x;
     position->y = y;
 
-    rect->x = position->x;
+    rect->x = position->x - rect->width / 2;
     rect->y = position->y;
 }
 
