@@ -20,14 +20,6 @@ public:
     int getCapacity();
 };
 
-class MainScene
-{
-public:
-    MainScene();
-    ~MainScene();
-    void Draw();
-};
-
 class Disk
 {
     Vector2 *position;
@@ -63,6 +55,20 @@ public:
     Disk* pop();
     Disk* top();
     Disk* popTopDiskOnHover(Vector2 mouseV);
+};
+
+class MainScene
+{
+    int n, count, moves;
+    Tower *src, *aux, *dest, *prev, *hovered;
+    Disk *selected;
+    Stack<Tower*> *towers;
+public:
+    MainScene(int n);
+    ~MainScene();
+    void Update();
+    void Draw();
+    Color getColor(int index);
 };
 
 #endif
