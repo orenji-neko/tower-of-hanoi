@@ -41,14 +41,19 @@ Disk* Tower::pop()
     return tower->pop();
 }
 
-Disk Tower::top()
+Disk* Tower::top()
 {
-    return *tower->top();
+    return tower->top();
 }
 
 bool Tower::isEmpty()
 {
     return tower->isEmpty();
+}
+
+int Tower::getLength()
+{
+    return tower->getLength();
 }
 
 Disk* Tower::popTopDiskOnHover(Vector2 mouseV)
@@ -60,7 +65,7 @@ Disk* Tower::popTopDiskOnHover(Vector2 mouseV)
     return NULL;
 }
 
-Rectangle Tower::getRect()
+Rectangle Tower::getRectangle()
 {
     return *rect;
 }
