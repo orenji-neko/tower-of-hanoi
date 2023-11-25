@@ -1,11 +1,15 @@
 #include <iostream>
+#include <string>
+#include <cmath>
 #include "raylib/raylib.h"
 #include "tower.h"
 
 int main(int argc, char **argv)
 {
     Color colors[] = {RED, ORANGE, YELLOW, GREEN, BLUE, PURPLE, VIOLET};
-    int n = 7;
+    int n = 3;
+    int count = 0;
+    int moves = pow(2, n) - 1;
 
     InitWindow(800, 450, "tower of hanoi");
 
@@ -65,9 +69,11 @@ int main(int argc, char **argv)
             // released left click on tower area
             else if(hovered->isEmpty() || (!hovered->isEmpty() && hovered->top()->getRectangle().width > selected->getRectangle().width))
             {
+                count++;
                 hovered->push(selected);
                 selected = NULL;
             }
+            // if can't push to tower
             else
             {
                 prev->push(selected);
@@ -85,6 +91,9 @@ int main(int argc, char **argv)
             // draw selected
             if(selected != NULL)
                 selected->draw();
+            // text
+            Color c = dest->getLength() < n ? WHITE : GREEN;
+            DrawText(("Moves: " + std::to_string(count) + "/" + std::to_string(moves)).c_str(), 10, 10, 16, c);
         EndDrawing();
     }
 
