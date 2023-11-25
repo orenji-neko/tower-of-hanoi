@@ -74,8 +74,6 @@ int main(int argc, char **argv)
                 selected = NULL;
             }
         }
-
-        std::cout << aux->getLength() << std::endl;
         
         BeginDrawing();
         ClearBackground(BLACK);
