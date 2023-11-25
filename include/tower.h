@@ -58,9 +58,10 @@ public:
     void draw();
     void push(Disk *disk);
     bool isEmpty();
-    Rectangle getRect();
+    int getLength();
+    Rectangle getRectangle();
     Disk* pop();
-    Disk top();
+    Disk* top();
     Disk* popTopDiskOnHover(Vector2 mouseV);
 };
 

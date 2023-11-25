@@ -5,12 +5,12 @@
 int main(int argc, char **argv)
 {
     Color colors[] = {RED, ORANGE, YELLOW, GREEN, BLUE, PURPLE, VIOLET};
-    int n = 3;
+    int n = 7;
 
     InitWindow(800, 450, "tower of hanoi");
 
     Disk *selected = NULL;
-    Tower *prev = NULL;
+    Tower *prev = NULL, *hovered = NULL;
 
     int x = 100;
     Tower *src = new Tower(x, 180, n);
@@ -34,33 +34,48 @@ int main(int argc, char **argv)
         Vector2 mouseV = GetMousePosition();
         Vector2 mouseD = GetMouseDelta();
 
-        if(selected != NULL && IsMouseButtonDown(MOUSE_BUTTON_LEFT))
-        {
-            int nx = selected->getPosition().x + mouseD.x;
-            int ny = selected->getPosition().y + mouseD.y;
-            selected->setPosition(nx, ny);
-        }
-
         for(int i = 0; i < 3; i++)
         {
             Tower *temp = towers->get(i);
 
             bool isSelectedEmpty = selected == NULL;
-            bool onHover = CheckCollisionPointRec(mouseV, temp->getRect());
-            bool isMouseDown = IsMouseButtonDown(MOUSE_BUTTON_LEFT);
+            bool onHover = CheckCollisionPointRec(mouseV, temp->getRectangle());
 
-            if(isSelectedEmpty && onHover && isMouseDown)
+            // getting selected disk to selected pointer
+            if(isSelectedEmpty && onHover && IsMouseButtonDown(MOUSE_BUTTON_LEFT))
             {
                 selected = temp->popTopDiskOnHover(mouseV);
                 prev = temp;
             }
+            // getting hovered tower reference
+            if(onHover)
+                hovered = temp;
+        }
 
-            if(!isSelectedEmpty && onHover && !isMouseDown)
+        // controlling selected disk
+        if(selected != NULL && prev != NULL && hovered != NULL)
+        {
+            // holding down left click
+            if(IsMouseButtonDown(MOUSE_BUTTON_LEFT))
             {
-                temp->push(selected);
+                int nx = selected->getPosition().x + mouseD.x;
+                int ny = selected->getPosition().y + mouseD.y;
+                selected->setPosition(nx, ny);
+            }
+            // released left click on tower area
+            else if(hovered->isEmpty() || (!hovered->isEmpty() && hovered->top()->getRectangle().width > selected->getRectangle().width))
+            {
+                hovered->push(selected);
+                selected = NULL;
+            }
+            else
+            {
+                prev->push(selected);
                 selected = NULL;
             }
         }
+
+        std::cout << aux->getLength() << std::endl;
         
         BeginDrawing();
         ClearBackground(BLACK);
