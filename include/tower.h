@@ -71,13 +71,4 @@ public:
     Color getColor(int index);
 };
 
-class MenuScene
-{
-public:
-    MenuScene();
-    ~MenuScene();
-    int Update();
-    void Draw();
-};
-
 #endif
