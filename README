@@ -1,0 +1,13 @@
+# Tower in Hanoi
+
+How to compile:
+
+For Linux:
+```
+make TARGET=linux
+```
+
+For Windows:
+```
+make TARGET=win
+```
