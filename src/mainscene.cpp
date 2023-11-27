@@ -206,6 +206,7 @@ void MainScene::reset()
     moves = pow(2, n) - 1;
 
     solve = false;
+    i = 1;
 }
 
 void mov(Tower *a, Tower *b)
