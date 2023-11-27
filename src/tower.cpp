@@ -5,7 +5,7 @@
 
 Tower::Tower(int x, int y, int cap)
 {
-    position = new Vector2{x, y};
+    position = new Vector2{(float)x, (float)y};
     rect = new Rectangle{position->x, position->y, 180, 200};
     tower = new Stack<Disk*>(cap);
 }

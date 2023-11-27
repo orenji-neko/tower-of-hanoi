@@ -1,31 +1,34 @@
-# Define the compiler and flags
-CXX = g++
-CXXFLAGS = -Wall -std=c++17 -g
-LDFLAGS = `pkg-config --libs raylib`
+CC = clang++
+CFLAGS = -Wall -std=c++17 -g
+INCLUDE = include
 
-# Define the source and build directories
-SRCDIR = src
-INCLUDEDIR = include
-BUILDDIR = build
+SRC = $(wildcard src/*.cpp)
+OBJ = $(addprefix build/,$(notdir $(SRC:.cpp=.o)))
 
-# Define the source and object files
-SRC = $(wildcard $(SRCDIR)/*.cpp)
-OBJ = $(SRC:$(SRCDIR)/%.cpp=$(BUILDDIR)/%.o)
-
-# Define the executable name
 EXE = tower
 
-# Define the default rule
+LIBPATH = lib
+LIBS = -lraylib
+
+ifeq ($(TARGET),linux)
+    RM = rm -f
+    LIBPATH := $(LIBPATH)/linux_amd64
+else ifeq($(TARGET),win)
+	RM = del /Q
+	LIBPATH := $(LIBPATH)/win_amd64
+	LIBS := -lraylib -lopengl32 -lgdi32 -lwinmm
+	CFLAGS = -Wall -std=c++17 -g -static
+else
+    $(error Invalid target platform. Please specify either 'win' or 'linux'.)
+endif
+
 all: $(EXE)
 
-# Define the rule to link the executable
 $(EXE): $(OBJ)
-	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o $@ $^
+	$(CC) $(CFLAGS) -L$(LIBPATH) $^ -o $@ $(LIBS)
 
-# Define the rule to compile the object files
-$(BUILDDIR)/%.o: $(SRCDIR)/%.cpp
-	$(CXX) $(CXXFLAGS) -I$(INCLUDEDIR) -c -o $@ $<
+build/%.o: src/%.cpp
+	$(CC) $(CFLAGS) -I$(INCLUDE) -c $< -o $@
 
-# Define the rule to clean the build directory
 clean:
-	rm -rf $(BUILDDIR)/*.o $(EXE)
+	$(RM) $(OBJ) $(EXE)
