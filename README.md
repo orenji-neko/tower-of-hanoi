@@ -2,6 +2,8 @@
 
 How to compile:
 
+*Uses raylib v5.0.0*
+
 For Linux:
 ```
 make
