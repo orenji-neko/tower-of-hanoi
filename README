@@ -4,10 +4,15 @@ How to compile:
 
 For Linux:
 ```
-make TARGET=linux
+make
 ```
 
 For Windows:
 ```
-make TARGET=win
+make TARGET=win CC=<your compiler executable>
+```
+
+Clean:
+```
+make clean
 ```

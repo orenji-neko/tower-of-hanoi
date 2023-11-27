@@ -10,6 +10,9 @@ EXE = tower
 LIBPATH = lib
 LIBS = -lraylib
 
+# default
+TARGET = linux
+
 ifeq ($(TARGET),linux)
     RM = rm -f
 	LIBPATH := 'pkg-config --libs raylib'
@@ -17,9 +20,6 @@ else ifeq ($(TARGET),win)
 	RM = del /Q
 	LIBPATH := $(LIBPATH)/win_amd64
 	LIBS := -lraylib -lopengl32 -lgdi32 -lwinmm
-	CFLAGS = -Wall -std=c++17 -g -static
-else
-    $(error Invalid target platform. Please specify either 'win' or 'linux'.)
 endif
 
 all: $(EXE)
