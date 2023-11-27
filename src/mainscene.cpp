@@ -5,6 +5,10 @@
 #include "raylib/raylib.h"
 #include "tower.h"
 
+bool solve = false;
+
+void mov(Tower *a, Tower *b);
+
 MainScene::MainScene(int n)
 {
     this->n = n;
@@ -44,6 +48,11 @@ int MainScene::Update()
     // reset key
     if(IsKeyPressed(KEY_R))
         reset();
+    if(IsKeyPressed(KEY_S))
+    {
+        reset();
+        solve = true;
+    }
 
     // checking each tower and its disks
     for(int i = 0; i < 3; i++)
@@ -54,7 +63,7 @@ int MainScene::Update()
         bool onHover = CheckCollisionPointRec(mouseV, temp->getRectangle());
 
         // getting selected disk to selected pointer
-        if(isSelectedEmpty && onHover && IsMouseButtonDown(MOUSE_BUTTON_LEFT) && !hasWon)
+        if(isSelectedEmpty && onHover && IsMouseButtonDown(MOUSE_BUTTON_LEFT) && !hasWon && !solve)
         {
             selected = temp->popTopDiskOnHover(mouseV);
             prev = temp;
@@ -95,6 +104,9 @@ int MainScene::Update()
     return 0;
 }
 
+int i = 1;
+int j = 0;
+
 void MainScene::Draw()
 {
     // drawing towers
@@ -102,6 +114,34 @@ void MainScene::Draw()
     {
         towers->get(i)->draw();
     }
+
+    // draw solve
+    if(solve && i <= moves && j % 20 == 0)
+    {
+        switch(i % 3)
+        {
+            case 1:
+                if(n % 2 == 0)
+                    mov(src, aux);
+                else
+                    mov(src, dest);
+                break;
+            case 2:
+                if(n % 2 == 0)
+                    mov(src, dest);
+                else
+                    mov(src, aux);
+                break;
+            case 0:
+                mov(aux, dest);
+                break;
+        }
+
+        i++;
+        count++;
+    }
+    if(i <= moves)
+        j++;
 
     // draw selected
     if(selected != NULL)
@@ -116,7 +156,7 @@ void MainScene::Draw()
     DrawText(("Moves: " + std::to_string(count) + "/" + std::to_string(moves)).c_str(), 80, 10, 16, c);
 
     // controls
-    DrawText("[R] Reset [ESC] Exit", 10, 430, 16, RAYWHITE);
+    DrawText("[R] Reset [S] Solve [ESC] Exit", 10, 430, 16, RAYWHITE);
 }
 
 MainScene::~MainScene()
@@ -164,4 +204,14 @@ void MainScene::reset()
 
     count = 0;
     moves = pow(2, n) - 1;
+
+    solve = false;
+}
+
+void mov(Tower *a, Tower *b)
+{
+    if(b->isEmpty() || (!a->isEmpty() && a->top()->getRectangle().width < b->top()->getRectangle().width))
+        b->push(a->pop());
+    else
+        mov(b, a);
 }
