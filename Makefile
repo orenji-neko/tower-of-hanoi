@@ -12,8 +12,8 @@ LIBS = -lraylib
 
 ifeq ($(TARGET),linux)
     RM = rm -f
-    LIBPATH := $(LIBPATH)/linux_amd64
-else ifeq($(TARGET),win)
+	LIBPATH := 'pkg-config --libs raylib'
+else ifeq ($(TARGET),win)
 	RM = del /Q
 	LIBPATH := $(LIBPATH)/win_amd64
 	LIBS := -lraylib -lopengl32 -lgdi32 -lwinmm
