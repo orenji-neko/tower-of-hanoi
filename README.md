@@ -4,6 +4,8 @@ How to compile:
 
 *Uses raylib v5.0.0*
 
+I know that this has bad design.
+
 For Linux:
 ```
 make
