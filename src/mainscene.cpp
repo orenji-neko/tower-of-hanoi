@@ -84,7 +84,7 @@ int MainScene::Update()
             selected->setPosition(nx, ny);
         }
         // released left click on tower area
-        else if(hovered->isEmpty() || (!hovered->isEmpty() && hovered->top()->getRectangle().width > selected->getRectangle().width))
+        else if((hovered->isEmpty() || (!hovered->isEmpty() && hovered->top()->getRectangle().width > selected->getRectangle().width)) && prev != hovered)
         {
             count++;
             hovered->push(selected);

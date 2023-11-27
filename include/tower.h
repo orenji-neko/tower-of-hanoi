@@ -1,6 +1,10 @@
 #ifndef TOWER_H
 #define TOWER_H
 
+#define MAJOR_V 1
+#define MINOR_V 0
+#define PATCH   0
+
 template <typename T>
 class Stack
 {
